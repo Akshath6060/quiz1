@@ -11,10 +11,20 @@ class Question extends StatefulWidget {
 
 class _QuestionState extends State<Question> {
   int i = 0;
+  String result='';
   void next() {
     if (i < question.length) {
       i++;
     }
+  }
+
+  void check(bool answer) {
+    if (answer == question[i].ans) {
+      result='correct';
+    } else {
+      result='wrong';
+    }
+    ;
   }
 
   List question = [
@@ -55,16 +65,18 @@ class _QuestionState extends State<Question> {
                 child: Text(question[i].qus)),
             SizedBox(
               width: 20,
-              height: 400,
+              height: 200,
             ),
             Container(
                 padding: EdgeInsets.all(20),
                 width: 600,
                 height: 100,
                 child: TextButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
+                        check(true);
                         next();
+
                       });
                     },
                     child: Text('yes'),
@@ -80,12 +92,15 @@ class _QuestionState extends State<Question> {
                 child: TextButton(
                   onPressed: () {
                     setState(() {
+                      check(false);
                       next();
+
                     });
                   },
                   child: Text('no'),
                   style: TextButton.styleFrom(backgroundColor: Colors.teal),
-                )),
+
+                ) ),
             Container(
               padding: EdgeInsets.all(20),
               width: 100,
@@ -100,7 +115,8 @@ class _QuestionState extends State<Question> {
                   )
                 ],
               ),
-            )
+            ),
+            Text(result,style: TextStyle(color: Colors.white),)
           ],
         ),
       ),
